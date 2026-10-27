@@ -139,10 +139,10 @@ class Enemy {
         bn::size size;
         bn::rect bounding_box;
 
-        Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size size) :
+        Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size enemy_size) :
         sprite(bn::sprite_items::square.create_sprite(starting_x, starting_y)),
         speed(1),
-        size(ENEMY_SIZE),
+        size(enemy_size),
         bounding_box(create_bounding_box(sprite, size))
         {}
 
