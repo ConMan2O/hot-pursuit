@@ -108,8 +108,8 @@ class Player {
 
         Player(bn::fixed x, bn::fixed y) :
             sprite(bn::sprite_items::dot.create_sprite(x, y)),
-            size(PLAYER_SIZE),
             speed(1.5),
+            size(PLAYER_SIZE),
             bounding_box(create_bounding_box(sprite, size)) {}
         /**
          * Update the position and bounding box of the player based on d-pad movement.
