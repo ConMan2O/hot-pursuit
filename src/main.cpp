@@ -145,6 +145,9 @@ class Enemy {
 
         {}
 
+        void update(Player& player){
+
+        }
     private:
 
 
