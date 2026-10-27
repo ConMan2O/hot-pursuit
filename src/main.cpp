@@ -122,10 +122,10 @@ class Player {
                 sprite.set_x(sprite.x() - speed);
             }
              if(bn::keypad::up_held()) {
-                sprite.set_y(sprite.y() + speed);
+                sprite.set_y(sprite.y() - speed);
             }
             if(bn::keypad::down_held()) {
-                sprite.set_y(sprite.y() - speed);
+                sprite.set_y(sprite.y() + speed);
             }
             
             bounding_box = create_bounding_box(sprite, size);
@@ -136,12 +136,12 @@ class Enemy {
     public:
         bn::sprite_ptr sprite;
         bn::size size;
-        bn::rect bounding_box;
+        bn::rect enemy_bounding_box;
 
         Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size size) :
         sprite(bn::sprite_items::dot.create_sprite(starting_x, starting_y)),
         size(ENEMY_SIZE),
-        bounding_box(create_bounding_box(sprite, size))
+        enemy_bounding_box(create_bounding_box(sprite, size))
 
         {}
 
@@ -160,6 +160,8 @@ int main() {
     // Create a player and initialize it
     Player player = Player(44, 22);
 
+    Enemy enemy = Enemy(-30, 10, ENEMY_SIZE);
+
     //bn::sprite_ptr enemy_sprite = bn::sprite_items::square.create_sprite(-30, 22);
     //bn::rect enemy_bounding_box = create_bounding_box(enemy_sprite, ENEMY_SIZE);
 
@@ -167,7 +169,7 @@ int main() {
         player.update();
 
         // Reset the current score and player position if the player collides with enemy
-        if(enemy_bounding_box.intersects(player.bounding_box)) {
+        if(enemy.enemy_bounding_box.intersects(player.bounding_box)) {
             scoreDisplay.resetScore();
             player.sprite.set_x(44);
             player.sprite.set_y(22);
