@@ -128,6 +128,25 @@ class Player {
         bn::rect bounding_box; // The rectangle around the sprite for checking collision
 };
 
+class Enemy {
+    public:
+        bn::sprite_ptr sprite;
+        bn::fixed size;
+        bn::rect bounding_box;
+
+        Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::fixed size) :
+        sprite(bn::sprite_items::dot.create_sprite(starting_x, starting_y)) 
+        {
+
+        }
+
+
+    private:
+
+
+
+};
+
 int main() {
     bn::core::init();
 
@@ -143,8 +162,8 @@ int main() {
     player.size = PLAYER_SIZE;
     player.bounding_box = create_bounding_box(player.sprite, player.size);
 
-    bn::sprite_ptr enemy_sprite = bn::sprite_items::square.create_sprite(-30, 22);
-    bn::rect enemy_bounding_box = create_bounding_box(enemy_sprite, ENEMY_SIZE);
+    //bn::sprite_ptr enemy_sprite = bn::sprite_items::square.create_sprite(-30, 22);
+    //bn::rect enemy_bounding_box = create_bounding_box(enemy_sprite, ENEMY_SIZE);
 
     while(true) {
         player.update();
