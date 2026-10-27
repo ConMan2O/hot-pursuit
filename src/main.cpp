@@ -136,12 +136,12 @@ class Enemy {
     public:
         bn::sprite_ptr sprite;
         bn::size size;
-        bn::rect enemy_bounding_box;
+        bn::rect bounding_box;
 
         Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size size) :
         sprite(bn::sprite_items::square.create_sprite(starting_x, starting_y)),
         size(ENEMY_SIZE),
-        enemy_bounding_box(create_bounding_box(sprite, size))
+        bounding_box(create_bounding_box(sprite, size))
 
         {}
 
@@ -169,11 +169,7 @@ int main() {
         player.update();
 
         // Reset the current score and player position if the player collides with enemy
-<<<<<<< HEAD
-        if(enemy.enemy_bounding_box.intersects(player.bounding_box)) {
-=======
         if(enemy.bounding_box.intersects(player.bounding_box)) {
->>>>>>> 67a96f7651657ad3224203d2939121a6afd16fc1
             scoreDisplay.resetScore();
             player.sprite.set_x(44);
             player.sprite.set_y(22);
