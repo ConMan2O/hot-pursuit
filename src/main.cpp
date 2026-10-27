@@ -127,8 +127,7 @@ class Player {
             if(bn::keypad::down_held()) {
                 sprite.set_y(sprite.y() - speed);
             }
-            // TODO: Add logic for up and down
-
+            
             bounding_box = create_bounding_box(sprite, size);
         }
 };
@@ -140,7 +139,6 @@ int main() {
     ScoreDisplay scoreDisplay = ScoreDisplay();
 
     // Create a player and initialize it
-    // TODO: we will move the initialization logic to a constructor.
     Player player = Player(44, 22);
 
     bn::sprite_ptr enemy_sprite = bn::sprite_items::square.create_sprite(-30, 22);
