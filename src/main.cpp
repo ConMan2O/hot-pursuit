@@ -136,15 +136,15 @@ class Player {
 class Enemy {
     public:
         bn::sprite_ptr sprite;
-        bn::fixed size;
+        bn::size size;
         bn::rect bounding_box;
 
-        Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::fixed size) :
-        sprite(bn::sprite_items::dot.create_sprite(starting_x, starting_y)) 
-        {
+        Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size size) :
+        sprite(bn::sprite_items::dot.create_sprite(starting_x, starting_y)),
+        size(ENEMY_SIZE),
+        bounding_box(create_bounding_box(sprite, size))
 
-        }
-
+        {}
 
     private:
 
