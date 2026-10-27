@@ -135,21 +135,20 @@ class Player {
 class Enemy {
     public:
         bn::sprite_ptr sprite;
+        bn::fixed speed;
         bn::size size;
         bn::rect bounding_box;
-        bn::fixed speed;
 
         Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size size) :
         sprite(bn::sprite_items::square.create_sprite(starting_x, starting_y)),
+        speed(1),
         size(ENEMY_SIZE),
-        bounding_box(create_bounding_box(sprite, size)),
-
+        bounding_box(create_bounding_box(sprite, size))
         {}
 
-    private:
+        void update(Player& player) {
 
-
-
+        }
 };
 
 int main() {
@@ -166,8 +165,6 @@ int main() {
 
     while(true) {
         player.update();
-
-        enemy.update(player);
 
         // Reset the current score and player position if the player collides with enemy
         if(enemy.bounding_box.intersects(player.bounding_box)) {
