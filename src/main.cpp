@@ -32,6 +32,8 @@ static constexpr int SCORE_Y = -70;
 static constexpr int HIGH_SCORE_X = -70;
 static constexpr int HIGH_SCORE_Y = -70;
 
+static constexpr int MAX_ENEMIES = 20;
+
 /**
  * Creates a rectangle centered at a sprite's location with a given size.
  * sprite the sprite to center the box around
@@ -188,13 +190,10 @@ class Enemy {
             bounding_box = create_bounding_box(sprite, size);
         }
 
-        void respawn(Player& player) {
-            // while loop to ensure enemy does not respawn on top of the player
-            while (bounding_box.intersects(player.bounding_box)) {
-                sprite.set_x(rand_spawn.get_int(MIN_X, MAX_X));
-                sprite.set_y(rand_spawn.get_int(MIN_Y, MAX_Y));
-                bounding_box = create_bounding_box(sprite, size);
-            }
+        void respawn() {
+            sprite.set_x(rand_spawn.get_int(MIN_X, MAX_X));
+            sprite.set_y(rand_spawn.get_int(MIN_Y, MAX_Y));
+            bounding_box = create_bounding_box(sprite, size);
         }
 };
 
@@ -207,20 +206,30 @@ int main() {
     // Create a player and initialize it
     Player player = Player(44, 22);
 
-    Enemy enemy = Enemy(-30, 10, ENEMY_SIZE);
+    bn::vector<Enemy, MAX_ENEMIES> enemies = {};
 
+    Enemy e1 = Enemy(-30, 10, ENEMY_SIZE);
+    Enemy e2 = Enemy(-20, 10, ENEMY_SIZE);
+    Enemy e3 = Enemy(-10, 10, ENEMY_SIZE);
+    Enemy e4 = Enemy(0, 10, ENEMY_SIZE);
+
+    enemies.push_back(e1);
+    enemies.push_back(e2);
+    enemies.push_back(e3);
+    enemies.push_back(e4);
 
     while(true) {
         player.update();
 
-        enemy.update(player);
-
-        // Reset the current score and player position if the player collides with enemy
-        if(enemy.bounding_box.intersects(player.bounding_box)) {
-            scoreDisplay.resetScore();
-            player.sprite.set_x(44);
-            player.sprite.set_y(22);
-            enemy.respawn(player);
+        for(Enemy enemy : enemies) {
+            enemy.update(player);
+            // Reset the current score and player position if the player collides with enemy
+            while (enemy.bounding_box.intersects(player.bounding_box)) {
+                scoreDisplay.resetScore();
+                player.sprite.set_x(44);
+                player.sprite.set_y(22);
+                enemy.respawn();
+            }
         }
 
         // Update the scores and disaply them
