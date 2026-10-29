@@ -6,6 +6,7 @@
 #include <bn_string.h>
 #include <bn_sprite_ptr.h>
 #include <bn_sprite_text_generator.h>
+#include <bn_random.h>
 
 #include "common_fixed_8x16_font.h"
 #include "bn_sprite_items_dot.h"
@@ -131,22 +132,22 @@ class Player {
             bounding_box = create_bounding_box(sprite, size);
 
             // Adding border to game
-        if (sprite.y() < MIN_Y)
-        {
-            sprite.set_y(MIN_Y);
-        }
-        if (sprite.y() > MAX_Y)
-        {
-            sprite.set_y(MAX_Y);
-        }
-        if (sprite.x() < MIN_X)
-        {
-            sprite.set_x(MIN_X);
-        }
-        if (sprite.x() > MAX_X )
-        {
-            sprite.set_x(MAX_X);
-        }
+            if (sprite.y() < MIN_Y)
+            {
+                sprite.set_y(MIN_Y);
+            }
+            if (sprite.y() > MAX_Y)
+            {
+                sprite.set_y(MAX_Y);
+            }
+            if (sprite.x() < MIN_X)
+            {
+                sprite.set_x(MIN_X);
+            }
+            if (sprite.x() > MAX_X )
+            {
+                sprite.set_x(MAX_X);
+            }
         }
 };
 
@@ -156,6 +157,7 @@ class Enemy {
         bn::fixed speed;
         bn::size size;
         bn::rect bounding_box;
+        bn::random rand_spawn;
 
         Enemy(bn::fixed starting_x, bn::fixed starting_y, bn::size enemy_size) :
         sprite(bn::sprite_items::square.create_sprite(starting_x, starting_y)),
@@ -184,6 +186,13 @@ class Enemy {
             }
 
             bounding_box = create_bounding_box(sprite, size);
+
+            if(bounding_box.intersects(player.bounding_box)){
+                sprite.set_x(rand_spawn.get_int(MIN_X, MAX_X));
+                sprite.set_y(rand_spawn.get_int(MIN_Y, MAX_Y));
+
+                bounding_box = create_bounding_box(sprite, size);
+            }
         }
 };
 
@@ -213,7 +222,6 @@ int main() {
 
         // Update the scores and disaply them
         scoreDisplay.update();
-        
 
         bn::core::update();
     }
