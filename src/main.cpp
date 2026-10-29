@@ -156,6 +156,15 @@ class Enemy {
                 sprite.set_x(sprite.x() + x_movement);
             }
 
+            if (sprite.y() > player.sprite.y()) {
+                bn::fixed y_movement = bn::min(speed, sprite.y() - player.sprite.y());
+                sprite.set_y(sprite.y() - y_movement);
+            }
+            if (sprite.y() < player.sprite.y()) {
+                bn::fixed y_movement = bn::min(speed, player.sprite.y() - sprite.y());
+                sprite.set_y(sprite.y() + y_movement);
+            }
+
             bounding_box = create_bounding_box(sprite, size);
         }
 };
