@@ -186,11 +186,13 @@ class Enemy {
             }
 
             bounding_box = create_bounding_box(sprite, size);
+        }
 
-            if(bounding_box.intersects(player.bounding_box)){
+        void respawn(Player& player) {
+            // while loop to ensure enemy does not respawn on top of the player
+            while (bounding_box.intersects(player.bounding_box)) {
                 sprite.set_x(rand_spawn.get_int(MIN_X, MAX_X));
                 sprite.set_y(rand_spawn.get_int(MIN_Y, MAX_Y));
-
                 bounding_box = create_bounding_box(sprite, size);
             }
         }
@@ -218,6 +220,7 @@ int main() {
             scoreDisplay.resetScore();
             player.sprite.set_x(44);
             player.sprite.set_y(22);
+            enemy.respawn(player);
         }
 
         // Update the scores and disaply them
