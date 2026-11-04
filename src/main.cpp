@@ -11,6 +11,8 @@
 #include "common_fixed_8x16_font.h"
 #include "bn_sprite_items_dot.h"
 #include "bn_sprite_items_square.h"
+#include "Player.h"
+#include "Bounding_Box.h"
 
 // Width and height of the the player bounding box
 static constexpr bn::size PLAYER_SIZE = {8, 8};
@@ -33,18 +35,6 @@ static constexpr int HIGH_SCORE_X = -70;
 static constexpr int HIGH_SCORE_Y = -70;
 
 static constexpr int MAX_ENEMIES = 20;
-
-/**
- * Creates a rectangle centered at a sprite's location with a given size.
- * sprite the sprite to center the box around
- * box_size the dimensions of the bounding box
- */
-bn::rect create_bounding_box(bn::sprite_ptr sprite, bn::size box_size) {
-    return bn::rect(sprite.x().round_integer(),
-                    sprite.y().round_integer(),
-                    box_size.width(),
-                    box_size.height());
-}
 
 /**
  * Displays a score and high score.
@@ -101,57 +91,7 @@ class ScoreDisplay {
         bn::sprite_text_generator text_generator; // Text generator for scores
 };
 
-class Player {
-    public:
-        // define instance variables
-        bn::sprite_ptr sprite;
-        bn::fixed speed; // The speed of the player
-        bn::size size; // The width and height of the sprite
-        bn::rect bounding_box; // The rectangle around the sprite for checking collision
 
-        Player(bn::fixed x, bn::fixed y) :
-            sprite(bn::sprite_items::dot.create_sprite(x, y)),
-            speed(1.5),
-            size(PLAYER_SIZE),
-            bounding_box(create_bounding_box(sprite, size)) {}
-        /**
-         * Update the position and bounding box of the player based on d-pad movement.
-         */
-        void update() {
-            if(bn::keypad::right_held()) {
-                sprite.set_x(sprite.x() + speed);
-            }
-            if(bn::keypad::left_held()) {
-                sprite.set_x(sprite.x() - speed);
-            }
-             if(bn::keypad::up_held()) {
-                sprite.set_y(sprite.y() - speed);
-            }
-            if(bn::keypad::down_held()) {
-                sprite.set_y(sprite.y() + speed);
-            }
-            
-            bounding_box = create_bounding_box(sprite, size);
-
-            // Adding border to game
-            if (sprite.y() < MIN_Y)
-            {
-                sprite.set_y(MIN_Y);
-            }
-            if (sprite.y() > MAX_Y)
-            {
-                sprite.set_y(MAX_Y);
-            }
-            if (sprite.x() < MIN_X)
-            {
-                sprite.set_x(MIN_X);
-            }
-            if (sprite.x() > MAX_X )
-            {
-                sprite.set_x(MAX_X);
-            }
-        }
-};
 
 class Enemy {
     public:

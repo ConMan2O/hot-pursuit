@@ -2,6 +2,7 @@
 #include <bn_keypad.h>
 #include "bn_sprite_items_dot.h"
 #include <bn_display.h>
+#include "Bounding_Box.h"
 
 static constexpr int MIN_Y = -bn::display::height() / 2;
 static constexpr int MAX_Y = bn::display::height() / 2;
