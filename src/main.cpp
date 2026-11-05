@@ -34,14 +34,8 @@ int main() {
     bool isCaught = false; // flag for if the player has been caught
 
     Enemy e1 = Enemy(-30, 10, ENEMY_SIZE);
-    // Enemy e2 = Enemy(-20, 10, ENEMY_SIZE);
-    // Enemy e3 = Enemy(-10, 10, ENEMY_SIZE);
-    // Enemy e4 = Enemy(0, 10, ENEMY_SIZE);
 
     enemies.push_back(e1);
-    // enemies.push_back(e2);
-    // enemies.push_back(e3);
-    // enemies.push_back(e4);
 
     while(true) {
         player.update();
@@ -50,6 +44,15 @@ int main() {
             enemy.update(player);
             if (enemy.bounding_box.intersects(player.bounding_box)) {
                 isCaught = true; // set flag
+            }
+        }
+
+        // Added enemy collusions - incomplete
+        for(int i = 0; i < enemies.size(); i++) {
+            for(int j = i + 1; j < enemies.size(); j++) {
+                if(enemies[i].bounding_box.intersects(enemies[j].bounding_box)) {
+                    enemies[i].enemy_interact(enemies[j]);
+                }
             }
         }
 

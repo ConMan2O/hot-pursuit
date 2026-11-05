@@ -21,6 +21,8 @@ class Enemy {
 
         void update(Player& player);
 
+        void enemy_interact(Enemy& other_enemy);
+
         void respawn();
 };
 

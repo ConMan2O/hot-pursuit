@@ -40,6 +40,32 @@ void Enemy::update(Player& player) {
     bounding_box = create_bounding_box(sprite, size);
 }
 
+void Enemy::enemy_interact(Enemy& other_enemy) {
+    
+    if(sprite.x() > other_enemy.sprite.x()) {
+        sprite.set_x(sprite.x() + 20);
+        other_enemy.sprite.set_x(other_enemy.sprite.x() - 20);
+    }
+    
+    if(sprite.x() < other_enemy.sprite.x()) {
+        sprite.set_x(sprite.x() - 20);
+        other_enemy.sprite.set_x(other_enemy.sprite.x() + 20);
+    }
+    
+    if(sprite.y() > other_enemy.sprite.y()) {
+        sprite.set_y(sprite.y() + 20);
+        other_enemy.sprite.set_y(other_enemy.sprite.y() - 20);
+    }
+    
+    if(sprite.y() < other_enemy.sprite.y()){
+        sprite.set_y(sprite.y() - 20);
+        other_enemy.sprite.set_y(other_enemy.sprite.y() + 20);
+    }
+
+    bounding_box = create_bounding_box(sprite, size);
+    other_enemy.bounding_box = create_bounding_box(other_enemy.sprite, other_enemy.size);
+}
+
 void Enemy::respawn() {
     sprite.set_x(rand_spawn.get_int(MIN_X, MAX_X));
     sprite.set_y(rand_spawn.get_int(MIN_Y, MAX_Y));
