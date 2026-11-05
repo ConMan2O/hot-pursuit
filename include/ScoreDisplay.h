@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SCORE_DISPLAY_H
 #define SCORE_DISPLAY_H
 
