@@ -42,23 +42,23 @@ void Enemy::update(Player& player) {
 
 void Enemy::enemy_interact(Enemy& other_enemy) {
     if(sprite.x() > other_enemy.sprite.x()) {
-        sprite.set_x(sprite.x() + 20);
-        other_enemy.sprite.set_x(other_enemy.sprite.x() - 20);
+        sprite.set_x(sprite.x() + (ENEMY_SIZE.width() / 2));
+        other_enemy.sprite.set_x(other_enemy.sprite.x() - (ENEMY_SIZE.width() / 2));
     }
     
     if(sprite.x() < other_enemy.sprite.x()) {
-        sprite.set_x(sprite.x() - 20);
-        other_enemy.sprite.set_x(other_enemy.sprite.x() + 20);
+        sprite.set_x(sprite.x() - (ENEMY_SIZE.width() / 2));
+        other_enemy.sprite.set_x(other_enemy.sprite.x() + (ENEMY_SIZE.width() / 2));
     }
     
     if(sprite.y() > other_enemy.sprite.y()) {
-        sprite.set_y(sprite.y() + 20);
-        other_enemy.sprite.set_y(other_enemy.sprite.y() - 20);
+        sprite.set_y(sprite.y() + (ENEMY_SIZE.height() / 2));
+        other_enemy.sprite.set_y(other_enemy.sprite.y() - (ENEMY_SIZE.height() / 2));
     }
     
     if(sprite.y() < other_enemy.sprite.y()){
-        sprite.set_y(sprite.y() - 20);
-        other_enemy.sprite.set_y(other_enemy.sprite.y() + 20);
+        sprite.set_y(sprite.y() - (ENEMY_SIZE.height() / 2));
+        other_enemy.sprite.set_y(other_enemy.sprite.y() + (ENEMY_SIZE.height() / 2));
     }
 
     bounding_box = create_bounding_box(sprite, size);
