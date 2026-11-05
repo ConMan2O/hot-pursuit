@@ -7,6 +7,8 @@
 #include <bn_sprite_ptr.h>
 #include <bn_sprite_text_generator.h>
 #include <bn_random.h>
+#include "bn_audio.h"
+#include "bn_sound_items.h"
 
 #include "common_fixed_8x16_font.h"
 #include "bn_sprite_items_dot.h"
@@ -40,7 +42,7 @@ int main() {
     while(true) {
         player.update();
 
-        for(Enemy enemy : enemies) {
+        for(Enemy& enemy : enemies) {
             enemy.update(player);
             if (enemy.bounding_box.intersects(player.bounding_box)) {
                 isCaught = true; // set flag
@@ -58,6 +60,7 @@ int main() {
 
         // Reset the current score and player position if the player collides with enemy
         if (isCaught) {
+            bn::sound_items::sound_effect_2.play();
             scoreDisplay.resetScore();
             player.sprite.set_x(44);
             player.sprite.set_y(22);
@@ -74,7 +77,9 @@ int main() {
         // Spawn an additional enemy every ~15 seconds
         if (enemies.size() < enemies.max_size() && scoreDisplay.score % 900 == 0) {
             enemies.push_back(Enemy(0, 0, ENEMY_SIZE));
-            enemies.end()->respawn();
+            enemies.back().respawn();
+
+            bn::sound_items::sound_effect_4.play();
         }
 
         bn::core::update();

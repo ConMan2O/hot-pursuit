@@ -1,4 +1,6 @@
 #include "ScoreDisplay.h"
+#include "bn_audio.h"
+#include "bn_sound_items.h"
 
 #include <bn_string.h>
 #include "common_fixed_8x16_font.h"
@@ -41,4 +43,7 @@ void ScoreDisplay::show_number(int x, int y, int number) {
 
 void ScoreDisplay::resetScore() {
     score = 0;
+    if(score == 0){
+        bn::sound_items::sound_effect_1.play();
+    }
 }
