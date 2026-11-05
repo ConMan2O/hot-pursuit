@@ -42,7 +42,7 @@ int main() {
     while(true) {
         player.update();
 
-        for(Enemy enemy : enemies) {
+        for(Enemy& enemy : enemies) {
             enemy.update(player);
             if (enemy.bounding_box.intersects(player.bounding_box)) {
                 isCaught = true; // set flag
@@ -77,7 +77,7 @@ int main() {
         // Spawn an additional enemy every ~15 seconds
         if (enemies.size() < enemies.max_size() && scoreDisplay.score % 900 == 0) {
             enemies.push_back(Enemy(0, 0, ENEMY_SIZE));
-            enemies.end()->respawn();
+            enemies.back().respawn();
 
             bn::sound_items::sound_effect_4.play();
         }
