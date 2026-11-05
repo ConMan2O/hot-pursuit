@@ -41,7 +41,6 @@ void Enemy::update(Player& player) {
 }
 
 void Enemy::enemy_interact(Enemy& other_enemy) {
-    
     if(sprite.x() > other_enemy.sprite.x()) {
         sprite.set_x(sprite.x() + 20);
         other_enemy.sprite.set_x(other_enemy.sprite.x() - 20);
